@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: acff0aa31e6aab147b456846ba9ec275
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - turret: {instanceID: 0}
+  - bullet: {instanceID: 0}
+  - CannonShot: {fileID: 8300000, guid: 74ffde8378d528341881e548f7c25e99, type: 3}
+  - Component: {fileID: 8300000, guid: edd5dff2b907a6e45a9cc81129e94599, type: 3}
+  - Explosion: {fileID: 8300000, guid: 25f92d194bfcbaa42b00349d478b6dfb, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

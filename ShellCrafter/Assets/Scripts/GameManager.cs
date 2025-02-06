@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject turret;
-    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject[] componentIcons;
     [SerializeField] AudioClip CannonShot;
     [SerializeField] AudioClip Component;
     [SerializeField] AudioClip Explosion;
+
+
+    private Bullet bullet;
 
     Component[] shell = new Component[4];
     int shellIndex = 0;
@@ -21,7 +28,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ClearShells();
     }
 
     // Update is called once per frame
@@ -40,6 +47,10 @@ public class GameManager : MonoBehaviour
         {
             LoadShell(Components.getComponent(componentID.HIGH_EXPLOSIVE));
         }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            LoadShell(Components.getComponent(componentID.ARMOR_PIERCING));
+        }
 
         //shoot turret
         if (Input.GetMouseButtonDown(0) && fireCooldown < 0.0f)
@@ -52,8 +63,30 @@ public class GameManager : MonoBehaviour
 
     void Shoot()
     {
-        GameObject.Instantiate(bullet, turret.transform.GetChild(0).position, turret.transform.rotation);
+        bullet = GameObject.Instantiate(bulletPrefab, turret.transform.GetChild(0).position, turret.transform.rotation).GetComponent<Bullet>();
+        AddStats();
         AudioSource.PlayClipAtPoint(CannonShot, Vector3.zero, 100f);
+    }
+
+    void AddStats()
+    {
+        foreach(Component comp in shell)
+        {
+            switch (comp.getId())
+            {
+                case componentID.EMPTY:
+                    continue;
+                case componentID.HIGH_EXPLOSIVE:
+                    bullet.aoeDamage += 10f;
+                    bullet.aoeSize += 0.05f;
+                    break;
+                case componentID.ARMOR_PIERCING:
+                    bullet.pierces += 1;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     void LoadShell(Component compIn)
@@ -63,18 +96,25 @@ public class GameManager : MonoBehaviour
             return;
         }
         shell[shellIndex] = compIn;
+        componentIcons[shellIndex].SetActive(true);
+        componentIcons[shellIndex].GetComponent<Image>().color = compIn.GetColor();
+
         shellIndex++;
         
-        AudioSource.PlayClipAtPoint(Component, Vector3.zero, 25f);
+        AudioSource.PlayClipAtPoint(Component, Vector3.zero, 0.8f);
     }
 
     void ClearShells()
     {
         shellIndex = 0;
         shell[0] = Components.getComponent(componentID.EMPTY);
+        componentIcons[0].SetActive(false);
         shell[1] = Components.getComponent(componentID.EMPTY);
+        componentIcons[1].SetActive(false);
         shell[2] = Components.getComponent(componentID.EMPTY);
+        componentIcons[2].SetActive(false);
         shell[3] = Components.getComponent(componentID.EMPTY);
+        componentIcons[3].SetActive(false);
     }
 
     void pointTurret()

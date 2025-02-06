@@ -17,16 +17,16 @@ public class Bullet : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = transform.up * speed;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.collider.gameObject.tag);
-        if (collision.collider.gameObject.tag != "enemy")
+        if (collision.gameObject.tag != "enemy")
         { return; }
 
         if (pierces > 0) //pierce through objects first
         { 
             pierces--;  
-            collision.collider.gameObject.GetComponent<Enemy>().damaged(hitDamage);
+            collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
             return; 
         }
         else //detonate into aoe

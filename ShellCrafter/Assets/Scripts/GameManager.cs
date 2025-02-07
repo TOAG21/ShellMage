@@ -51,6 +51,27 @@ public class GameManager : MonoBehaviour
         {
             LoadShell(Components.getComponent(componentID.ARMOR_PIERCING));
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            LoadShell(Components.getComponent(componentID.FRAGMENTATION));
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            LoadShell(Components.getComponent(componentID.INCENDIARY));
+        }
+        ////////////////////////////////////////////
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            LoadShell(Components.getComponent(componentID.TUNGSTEN));
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            LoadShell(Components.getComponent(componentID.RAILGUN));
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            LoadShell(Components.getComponent(componentID.NUCLEAR));
+        }
 
         //shoot turret
         if (Input.GetMouseButtonDown(0) && fireCooldown < 0.0f)
@@ -82,6 +103,26 @@ public class GameManager : MonoBehaviour
                     break;
                 case componentID.ARMOR_PIERCING:
                     bullet.pierces += 1;
+                    bullet.hitDamage += 7f;
+                    break;
+                case componentID.FRAGMENTATION:
+                    //fragment count + 5
+                    break;
+                case componentID.INCENDIARY:
+                    //fire strength += 5
+                    break;
+                case componentID.TUNGSTEN:
+                    bullet.hitDamage += 20f;
+                    bullet.speed /= 2f;
+                    break;
+                case componentID.RAILGUN:
+                    bullet.pierces += 5;
+                    bullet.speed *= 2f;
+                    break;
+                case componentID.NUCLEAR:
+                    bullet.aoeDamage += 50f;
+                    bullet.aoeSize += 1f;
+                    //deal damage to health
                     break;
                 default:
                     break;

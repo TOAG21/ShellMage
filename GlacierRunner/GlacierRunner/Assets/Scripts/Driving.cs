@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Driving : MonoBehaviour
 {
-    Rigidbody2D rb;
+    [SerializeField] ParticleSystem[] iceParticles;
+    [SerializeField] Rigidbody2D[] cabooses;
 
-    float acceleration = 1f;
-    float torque = 0.1f;
+    Rigidbody2D rb;
+    AudioSource audioSource;
+
+    float acceleration = 170f * 5.5f;
+    float torque = 17f * 5.5f;
 
     float leftTrackStatus = 0.0f;
     float rightTrackStatus = 0.0f;
@@ -15,12 +20,13 @@ public class Driving : MonoBehaviour
 
     float reverseCoefficient = -0.7f;
 
-    float speedLimit = 50f;
+    float speedLimit = 60f;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -35,8 +41,8 @@ public class Driving : MonoBehaviour
 
             //if (leftTrackStatus >= 0.0f)
             {
-                rb.AddForce(this.transform.up * acceleration * leftTrackStatus * diminishingSpeed);
-                rb.AddTorque(-1f * torque * leftTrackStatus);
+                rb.AddForce(this.transform.up * acceleration * leftTrackStatus * diminishingSpeed * Time.deltaTime);
+                rb.AddTorque(-1f * torque * leftTrackStatus * Time.deltaTime);
             }
         }
         else if (Input.GetKey(KeyCode.Q))//left reverse
@@ -46,8 +52,8 @@ public class Driving : MonoBehaviour
 
             //if (leftTrackStatus <= 0.0f)
             {
-                rb.AddForce(-1f * reverseCoefficient * this.transform.up * acceleration * leftTrackStatus * diminishingSpeed);
-                rb.AddTorque(reverseCoefficient * torque * leftTrackStatus);
+                rb.AddForce(-1f * reverseCoefficient * this.transform.up * acceleration * leftTrackStatus * diminishingSpeed * Time.deltaTime);
+                rb.AddTorque(reverseCoefficient * torque * leftTrackStatus * Time.deltaTime);
             }
         }
         else
@@ -57,6 +63,7 @@ public class Driving : MonoBehaviour
 
         }
 
+        ///////////////////////////////////////////////////////////////////
         if (Input.GetMouseButton(1))//right forward
         {
             rightTrackStatus += trackAccelerationTime * Time.deltaTime;
@@ -64,8 +71,8 @@ public class Driving : MonoBehaviour
 
            // if (rightTrackStatus >= 0.0f)
             {
-                rb.AddForce(this.transform.up * acceleration * rightTrackStatus * diminishingSpeed);
-                rb.AddTorque(torque * rightTrackStatus);
+                rb.AddForce(this.transform.up * acceleration * rightTrackStatus * diminishingSpeed * Time.deltaTime);
+                rb.AddTorque(torque * rightTrackStatus * Time.deltaTime);
             }
         }
         else if (Input.GetKey(KeyCode.E))//right reverse
@@ -75,8 +82,8 @@ public class Driving : MonoBehaviour
 
             //if (rightTrackStatus <= 0.0f)
             {
-                rb.AddForce(-1f * reverseCoefficient * this.transform.up * acceleration * rightTrackStatus * diminishingSpeed);
-                rb.AddTorque(-1f * reverseCoefficient * torque * rightTrackStatus);
+                rb.AddForce(-1f * reverseCoefficient * this.transform.up * acceleration * rightTrackStatus * diminishingSpeed * Time.deltaTime);
+                rb.AddTorque(-1f * reverseCoefficient * torque * rightTrackStatus * Time.deltaTime);
             }
         }
         else
@@ -86,6 +93,30 @@ public class Driving : MonoBehaviour
 
         }
 
+        updateParticles();
+        audioSource.volume = Mathf.Abs(leftTrackStatus) + Mathf.Abs(rightTrackStatus) / 3f;
+
+        if (Input.GetKey(KeyCode.R))
+        {
+            SceneManager.LoadScene("Level1");
+        }
         //Debug.Log(this.transform.up);
+    }
+
+    void updateParticles()
+    {
+        ParticleSystem.EmissionModule emitter;
+        emitter = iceParticles[0].emission;
+        emitter.rateOverTime = 163f * Mathf.Abs(leftTrackStatus);
+        emitter = iceParticles[1].emission;
+        emitter.rateOverTime = 163f * Mathf.Abs(rightTrackStatus);
+
+        for (int i = 2; i < iceParticles.Length; i+=2)
+        {
+            emitter = iceParticles[i].emission;
+            emitter.rateOverTime = 83f * (cabooses[i / 2 - 1].velocity.magnitude / 20);
+            emitter = iceParticles[i+1].emission;
+            emitter.rateOverTime = 83f * (cabooses[i / 2 - 1].velocity.magnitude / 20);
+        }
     }
 }

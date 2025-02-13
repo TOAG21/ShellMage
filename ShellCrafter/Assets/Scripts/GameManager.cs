@@ -18,9 +18,12 @@ public class GameManager : MonoBehaviour
 
     private Bullet bullet;
 
+
+    int wave = 1;
+    float health = 40f;
+
     Component[] shell = new Component[4];
     int shellIndex = 0;
-    int wave = 1;
     float fireCooldown = 0.0f;
 
     Vector3 mousePos;
@@ -106,18 +109,19 @@ public class GameManager : MonoBehaviour
                     bullet.hitDamage += 7f;
                     break;
                 case componentID.FRAGMENTATION:
-                    //fragment count + 5
+                    bullet.fragLevel += 1;
                     break;
                 case componentID.INCENDIARY:
-                    //fire strength += 5
+                    bullet.fireLevel += 1;
                     break;
                 case componentID.TUNGSTEN:
                     bullet.hitDamage += 20f;
-                    bullet.speed /= 2f;
+                    bullet.knockback += 10f;
                     break;
                 case componentID.RAILGUN:
                     bullet.pierces += 5;
-                    bullet.speed *= 2f;
+                    bullet.speed += 6f;
+                    bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.up * bullet.speed;
                     break;
                 case componentID.NUCLEAR:
                     bullet.aoeDamage += 50f;

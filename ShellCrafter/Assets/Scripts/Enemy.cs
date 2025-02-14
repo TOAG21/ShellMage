@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float startingHealth = 200f;
 
     float health;
+    float damage = 1f;
     float fireDamage = 0.0f;
 
     Vector3 pos;
@@ -26,6 +28,15 @@ public class Enemy : MonoBehaviour
         transform.position = pos;
 
         damaged(fireDamage);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.tag != "wall")
+            { return; }
+        GameObject.FindGameObjectWithTag("scripts").GetComponent<GameManager>().takeDamage(damage);
+        Destroy(this.gameObject);
     }
 
     public void damaged(float damage)

@@ -48,15 +48,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 6760787490002232806, guid: 2edef53119380914e8b4240cc348fc19, type: 3}
+  fragment: {fileID: 7655540536342690571, guid: 22da0aece3dc6cc449298317654e5a12, type: 3}
   speed: 10
   pierces: 0
   hitDamage: 15
   aoeDamage: 35
-  aoeSize: 1
+  aoeSize: 0.2
   fireLevel: 0
   fragLevel: 0
   knockback: 0
-  fragment: 0
+  isFragment: 0
 --- !u!70 &1870894376842956465
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

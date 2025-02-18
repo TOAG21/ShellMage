@@ -18,6 +18,8 @@ public class Bullet : MonoBehaviour
     public float knockback = 0f;
 
     public bool isFragment = false;
+    public bool enhanced = false;
+    bool[] enhancement = new bool[16];
 
     private GameObject fragHolder;
 
@@ -85,5 +87,15 @@ public class Bullet : MonoBehaviour
 
 
         Destroy(gameObject);
+    }
+
+    public void Airburst()
+    {
+
+    }
+
+    public void addEnhancement(int enhancementIn)
+    {
+        enhancement[enhancementIn] = true;
     }
 }

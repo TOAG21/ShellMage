@@ -77,6 +77,10 @@ public class GameManager : MonoBehaviour
         {
             LoadShell(Components.getComponent(componentID.NUCLEAR));
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            LoadShell(Components.getComponent(componentID.ENHANCEMENT));
+        }
 
         //for dev testing
         if (Input.GetKeyDown(KeyCode.Z))
@@ -90,6 +94,12 @@ public class GameManager : MonoBehaviour
             Shoot();
             fireCooldown = 1.0f;
             ClearShells();
+        }
+
+        //airburst last shell
+        if (bullet != null)
+        {
+            bullet.Airburst();
         }
     }
 
@@ -135,6 +145,37 @@ public class GameManager : MonoBehaviour
                     bullet.aoeDamage += 50f;
                     bullet.aoeSize += 1f;
                     takeDamage(4f);
+                    break;
+                case componentID.ENHANCEMENT:
+                    bullet.enhanced = true;
+                    string enhance = "";
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (shell[i].getId() != componentID.EMPTY && shell[i].getId() != componentID.ENHANCEMENT)
+                        {
+                            enhance = ((int)shell[i].getId()).ToString() + ((int)shell[i + 1].getId()).ToString();
+                            switch (enhance)
+                            {
+                                case "12": bullet.addEnhancement(0);  break;
+                                case "13": bullet.addEnhancement(1);  break;
+                                case "14": bullet.addEnhancement(2);  break;
+                                case "15": bullet.addEnhancement(3);  break;
+                                case "16": bullet.addEnhancement(4);  break;
+                                case "23": bullet.addEnhancement(5);  break;
+                                case "24": bullet.addEnhancement(6);  break;
+                                case "25": bullet.addEnhancement(7);  break;
+                                case "26": bullet.addEnhancement(8);  break;
+                                case "34": bullet.addEnhancement(9);  break;
+                                case "35": bullet.addEnhancement(10); break;
+                                case "36": bullet.addEnhancement(11); break;
+                                case "45": bullet.addEnhancement(12); break;
+                                case "46": bullet.addEnhancement(13); break;
+                                case "56": bullet.addEnhancement(14); break;
+                                case "66": bullet.addEnhancement(15); break;
+                                default: break;
+                            }
+                        }
+                    }
                     break;
                 default:
                     break;

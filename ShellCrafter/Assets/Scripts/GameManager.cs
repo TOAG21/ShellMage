@@ -9,11 +9,13 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject turret;
+    [SerializeField] UImanager ui;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject[] componentIcons;
     [SerializeField] AudioClip CannonShot;
     [SerializeField] AudioClip Component;
     [SerializeField] AudioClip Explosion;
+    [SerializeField] GameObject Enemy1;
 
 
     private Bullet bullet;
@@ -76,6 +78,12 @@ public class GameManager : MonoBehaviour
             LoadShell(Components.getComponent(componentID.NUCLEAR));
         }
 
+        //for dev testing
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            GameObject.Instantiate(Enemy1, new Vector3(Random.Range(-7, 7f), 4f, 0f), Quaternion.Euler(Vector3.zero));
+        }
+
         //shoot turret
         if (Input.GetMouseButtonDown(0) && fireCooldown < 0.0f)
         {
@@ -126,7 +134,7 @@ public class GameManager : MonoBehaviour
                 case componentID.NUCLEAR:
                     bullet.aoeDamage += 50f;
                     bullet.aoeSize += 1f;
-                    //deal damage to health
+                    takeDamage(4f);
                     break;
                 default:
                     break;
@@ -171,6 +179,12 @@ public class GameManager : MonoBehaviour
         Vector3 towardMouse = mousePos - turret.transform.position;
         float angle = Mathf.Atan2(towardMouse.y, towardMouse.x) * 57.3f - 90f;//* 57.3f
         turret.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    public void takeDamage(float damage)
+    {
+        health -= damage;
+        ui.setHealth(health);
     }
 }
 

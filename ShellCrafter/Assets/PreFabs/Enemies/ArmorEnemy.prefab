@@ -93,8 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1849697604149899430}
-  - component: {fileID: 2319494322722162782}
   - component: {fileID: 6817284162729982822}
+  - component: {fileID: 2319494322722162782}
+  - component: {fileID: -7791573175147996671}
   m_Layer: 0
   m_Name: ArmorEnemy
   m_TagString: enemy
@@ -118,6 +119,19 @@ Transform:
   - {fileID: 3846469403249040331}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6817284162729982822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8380420204547382344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5f94f64e8987940bf20a24ea417c7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 200
 --- !u!61 &2319494322722162782
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -163,16 +177,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.16, y: 0.3786989}
   m_EdgeRadius: 0
---- !u!114 &6817284162729982822
-MonoBehaviour:
+--- !u!50 &-7791573175147996671
+Rigidbody2D:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8380420204547382344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5f94f64e8987940bf20a24ea417c7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 200
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

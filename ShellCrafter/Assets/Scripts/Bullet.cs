@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject explosionEffect;
+    [SerializeField] GameObject fragment;
 
     public float speed = 10f;
     public int pierces = 0;
@@ -16,7 +17,9 @@ public class Bullet : MonoBehaviour
     public int fragLevel = 0;
     public float knockback = 0f;
 
-    public bool fragment = false;
+    public bool isFragment = false;
+
+    private GameObject fragHolder;
 
     // Start is called before the first frame update
     void Awake()
@@ -27,12 +30,12 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision.collider.gameObject.tag);
-        if (collision.gameObject.tag != "enemy")
-        { return; }
         if (collision.gameObject.tag == "wall")
         { Destroy(gameObject); }
+        if (collision.gameObject.tag != "enemy")
+        { return; }
 
-        if (fragment)
+        if (isFragment)
         {
             //what should the bullet do if its a fragment
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
@@ -53,12 +56,12 @@ public class Bullet : MonoBehaviour
         }
         else //detonate into aoe
         {
-            Debug.Log("Detonate");
+            collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
+
             GameObject.Instantiate(explosionEffect, transform.position, Quaternion.identity);
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(this.transform.position.x, this.transform.position.y ), aoeSize);
             foreach (var hitCollider in hitColliders)
             {
-                Debug.Log(hitCollider.gameObject.tag);
                 if (hitCollider.gameObject.tag == "enemy")
                 {
                     hitCollider.gameObject.GetComponent<Enemy>().damaged(aoeDamage);
@@ -67,7 +70,15 @@ public class Bullet : MonoBehaviour
 
             for (int i = 0; i < fragLevel; i++)
             {
-                //spawn 3-5 fragment prefabs
+                for (int f = 0; f < 3; f++)
+                {
+                    Vector3 rot;
+                    fragHolder = GameObject.Instantiate(fragment, transform.position - new Vector3(0f, 0.3f, 0f), Quaternion.identity);
+                    rot = fragHolder.transform.rotation.eulerAngles;
+                    rot.z = Random.Range(0.0f, 360.0f);
+                    fragHolder.transform.rotation = Quaternion.Euler(rot);
+                    fragHolder.GetComponent<Rigidbody2D>().velocity = fragHolder.transform.up * fragHolder.GetComponent<Bullet>().speed;
+                }
             }
         }
 

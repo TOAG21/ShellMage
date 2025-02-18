@@ -11,7 +11,8 @@ public enum componentID
     INCENDIARY,
     TUNGSTEN,
     RAILGUN,
-    NUCLEAR
+    NUCLEAR,
+    ENHANCEMENT
 }
 
 public static class Components
@@ -24,6 +25,7 @@ public static class Components
     static Component Tungsten =      new Component(0f, componentID.TUNGSTEN,        new Color( 240 / 255f, 240 / 255f, 240 / 255f));
     static Component Railgun =       new Component(0f, componentID.RAILGUN,         new Color( 105 / 255f, 243 / 255f, 243 / 255f));
     static Component Nuclear =       new Component(0f, componentID.NUCLEAR,         new Color(  31 / 255f, 207 / 255f,  76 / 255f));
+    static Component Enhancement =   new Component(0f, componentID.ENHANCEMENT,     new Color( 255 / 255f, 255 / 255f,  0  / 255f));
 
 
     public static Component getComponent(componentID id)
@@ -46,6 +48,8 @@ public static class Components
                 return Railgun;
             case componentID.NUCLEAR:
                 return Nuclear;
+            case componentID.ENHANCEMENT:
+                return Enhancement;
             default:
                 return Empty;
         }

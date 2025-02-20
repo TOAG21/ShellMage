@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float startingHealth = 200f;
 
-    float health;
+    public float health;
     float damage = 1f;
     float fireDamage = 0.0f;
 
@@ -43,10 +43,6 @@ public class Enemy : MonoBehaviour
     {
         //Debug.Log("Damage called: " + damage);
         health -= damage;
-        if (health <= 0)
-        {
-            Destroy(this.gameObject);
-        }
 
         hpColoration.g = (health / startingHealth);
         hpColoration.b = (health / startingHealth);

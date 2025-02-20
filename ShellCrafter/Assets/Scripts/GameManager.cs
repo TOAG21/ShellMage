@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviour
     private Bullet bullet;
 
 
-    int wave = 1;
+    int wave = 0;
     float health = 40f;
+    EnemyManager em;
 
     Component[] shell = new Component[4];
     int shellIndex = 0;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         ClearShells();
+        em = GetComponent<EnemyManager>();
     }
 
     // Update is called once per frame
@@ -42,7 +44,14 @@ public class GameManager : MonoBehaviour
         pointTurret();
         if(fireCooldown >= 0.0f) { fireCooldown -= Time.deltaTime; }
 
-        InputCheck();        
+        InputCheck();    
+        
+        if(em.noEnemies)
+        {
+            em.SpawnWave(wave);
+            wave++;
+            ui.setWave(wave);
+        }
     }
 
     void InputCheck()

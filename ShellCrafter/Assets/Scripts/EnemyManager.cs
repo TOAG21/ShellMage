@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     {
         string json;
         filepath = Application.persistentDataPath + "/WaveData.json";
-        Debug.Log(filepath);
+        //Debug.Log(filepath);
 
         /*test serialization
         WaveHolder wh = new WaveHolder();

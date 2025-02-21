@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
     Color hpColoration = new Color(1f, 1f, 1f, 1f);
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         health = startingHealth;
 
@@ -32,11 +32,10 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag != "wall")
             { return; }
         GameObject.FindGameObjectWithTag("scripts").GetComponent<GameManager>().takeDamage(damage);
-        Destroy(this.gameObject);
+        health = 0;
     }
 
     public void damaged(float damage)
@@ -53,5 +52,14 @@ public class Enemy : MonoBehaviour
     public void ignite(int fireLevel)
     {
         fireDamage = 0.4f * fireLevel;
+    }
+
+    public bool isBurning()
+    {
+        if (fireDamage > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

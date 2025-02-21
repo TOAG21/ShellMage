@@ -41,6 +41,31 @@ public class Bullet : MonoBehaviour
         {
             //what should the bullet do if its a fragment
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
+
+            if (enhanced)
+            {
+                if (enhancement[1])
+                {
+
+                }
+                if (enhancement[4])
+                {
+
+                }
+                if (enhancement[5])
+                {
+
+                }
+                if (enhancement[9])
+                {
+
+                }
+                if (enhancement[10])
+                {
+
+                }
+            }
+
             Destroy(gameObject);
             return;
         }
@@ -54,6 +79,31 @@ public class Bullet : MonoBehaviour
         { 
             pierces--;  
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
+
+            if(enhanced)
+            {
+                if (enhancement[0])
+                {
+
+                }
+                if (enhancement[6])
+                {
+
+                }
+                if (enhancement[7])
+                {
+
+                }
+                if (enhancement[12])
+                {
+
+                }
+                if (enhancement[15])
+                {
+
+                }
+            }
+
             return; 
         }
         else //detonate into aoe
@@ -67,6 +117,30 @@ public class Bullet : MonoBehaviour
                 if (hitCollider.gameObject.tag == "enemy")
                 {
                     hitCollider.gameObject.GetComponent<Enemy>().damaged(aoeDamage);
+                    if (enhancement[4])
+                    {
+
+                    }
+                }
+            }
+
+            if (enhanced)
+            {
+                if (enhancement[2])
+                {
+
+                }
+                if (enhancement[8])
+                {
+
+                }
+                if (enhancement[13])
+                {
+
+                }
+                if (enhancement[14])
+                {
+
                 }
             }
 

@@ -190,6 +190,8 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        //if enhanced 3
+        //if enhanced 11
     }
 
     void LoadShell(Component compIn)

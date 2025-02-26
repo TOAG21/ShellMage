@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -57,6 +56,11 @@ public class GameManager : MonoBehaviour
 
     void InputCheck()
     {       
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         //load shells
         if (Input.GetKeyDown(KeyCode.Q))
         {

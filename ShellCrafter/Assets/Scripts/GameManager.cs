@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject turret;
     [SerializeField] UImanager ui;
+    [SerializeField] GameObject pauseUI;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject[] componentIcons;
     [SerializeField] AudioClip CannonShot;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     int wave = 0;
     float health = 40f;
     EnemyManager em;
+    bool paused = false;
 
     Component[] shell = new Component[4];
     int shellIndex = 0;
@@ -31,9 +33,15 @@ public class GameManager : MonoBehaviour
 
     Vector3 mousePos;
 
+    string dataPath;
+    WaveNumber waveNumber;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        dataPath = Application.persistentDataPath + "/data.json";
+        //wavenumber here
+
         ClearShells();
         em = GetComponent<EnemyManager>();
     }
@@ -58,8 +66,10 @@ public class GameManager : MonoBehaviour
     {       
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            TogglePause();
+            return;
         }
+        if (paused) { return; }
 
         //load shells
         if (Input.GetKeyDown(KeyCode.Q))
@@ -155,8 +165,8 @@ public class GameManager : MonoBehaviour
                 case componentID.EMPTY:
                     continue;
                 case componentID.HIGH_EXPLOSIVE:
-                    bullet.aoeDamage += 10f;
-                    bullet.aoeSize += 0.05f;
+                    bullet.aoeDamage += 17f;
+                    bullet.aoeSize += 0.15f;
                     break;
                 case componentID.ARMOR_PIERCING:
                     bullet.pierces += 1;
@@ -169,11 +179,11 @@ public class GameManager : MonoBehaviour
                     bullet.fireLevel += 1;
                     break;
                 case componentID.TUNGSTEN:
-                    bullet.hitDamage += 20f;
+                    bullet.hitDamage += 25f;
                     bullet.knockback += 10f;
                     break;
                 case componentID.RAILGUN:
-                    bullet.pierces += 5;
+                    bullet.pierces += 3;
                     bullet.speed += 6f;
                     bullet.GetComponent<Rigidbody2D>().velocity = bullet.transform.up * bullet.speed;
                     break;
@@ -271,6 +281,20 @@ public class GameManager : MonoBehaviour
     {
         health -= damage;
         ui.setHealth(health);
+    }
+
+    void TogglePause()
+    {
+        if (!paused)
+        {
+            Time.timeScale = 0f;
+            paused = true;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            paused = false;
+        }
     }
 }
 

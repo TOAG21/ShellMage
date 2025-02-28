@@ -53,11 +53,12 @@ MonoBehaviour:
   pierces: 0
   hitDamage: 15
   aoeDamage: 35
-  aoeSize: 0.2
+  aoeSize: 0.3
   fireLevel: 0
   fragLevel: 0
   knockback: 0
   isFragment: 0
+  enhanced: 0
 --- !u!70 &1870894376842956465
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

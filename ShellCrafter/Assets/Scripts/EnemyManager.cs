@@ -14,12 +14,16 @@ public class EnemyManager : MonoBehaviour
     List<GameObject> enemies = new List<GameObject>();
 
     string filepath;
+    string filepathMenu;
+
+    public bool menu = false;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         string json;
         filepath = Application.persistentDataPath + "/WaveData.json";
+        filepathMenu = Application.persistentDataPath + "/WaveDataM.json";
         //Debug.Log(filepath);
 
         /*test serialization
@@ -37,7 +41,14 @@ public class EnemyManager : MonoBehaviour
         */
 
         //read data in
-        json = System.IO.File.ReadAllText(filepath);
+        if (!menu)
+        {
+            json = System.IO.File.ReadAllText(filepath);
+        }
+        else
+        {
+            json = System.IO.File.ReadAllText(filepathMenu);
+        }
         waveHolder = JsonUtility.FromJson<WaveHolder>(json);
     }
 
@@ -62,7 +73,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnWave(int waveNum)
     {
-        if (waveNum > waveHolder.waves.Length - 1) { return; }
+        if (waveNum > waveHolder.waves.Length - 1) { waveNum = waveLoop(waveNum); }
 
         Wave wave = waveHolder.waves[waveNum];
         noEnemies = false;
@@ -70,6 +81,17 @@ public class EnemyManager : MonoBehaviour
         {
             enemies.Add(GameObject.Instantiate(EnemyPrefabs[wave.enemyType[i]], wave.enemyPos[i], Quaternion.Euler(Vector3.zero)));
         }
+    }
+
+    int waveLoop(int waveIn)
+    {
+        if (waveIn > waveHolder.waves.Length - 1)
+        {
+            waveIn -= waveHolder.waves.Length;
+            waveIn = waveLoop(waveIn);
+        }
+
+        return waveIn;
     }
 }
 

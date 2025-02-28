@@ -34,7 +34,11 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.tag != "wall")
             { return; }
-        GameObject.FindGameObjectWithTag("scripts").GetComponent<GameManager>().takeDamage(damage);
+        try
+        {
+            GameObject.FindGameObjectWithTag("scripts").GetComponent<GameManager>().takeDamage(damage);
+        }
+        catch { }
         health = 0;
     }
 

@@ -60,7 +60,7 @@ public class Bullet : MonoBehaviour
             }
             if (enhancement[15])
             {
-                pierces += 2;
+                pierces += 4;
             }
         }
 

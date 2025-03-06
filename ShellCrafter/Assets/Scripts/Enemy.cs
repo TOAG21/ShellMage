@@ -8,7 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] float startingHealth = 200f;
 
     public float health;
-    float damage = 1f;
+    [SerializeField] float damage = 1f;
+    public bool bomber;
     float fireDamage = 0.0f;
 
     Vector3 pos;
@@ -65,5 +66,10 @@ public class Enemy : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void Detonate()
+    {
+
     }
 }

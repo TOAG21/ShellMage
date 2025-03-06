@@ -132,6 +132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 80
+  health: 0
+  damage: 8
 --- !u!61 &2319494322722162782
 BoxCollider2D:
   m_ObjectHideFlags: 0

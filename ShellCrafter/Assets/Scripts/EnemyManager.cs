@@ -62,6 +62,7 @@ public class EnemyManager : MonoBehaviour
             script = enemies[i].GetComponent<Enemy>();
             if (script.health <= 0)
             {
+                if (script.bomber) { script.Detonate(); }
                 Destroy(enemies[i]);
                 enemies.RemoveAt(i);
                 i--;
@@ -108,3 +109,15 @@ public class Wave
     //positions must be between (-9,9) and (6,15)
     public Vector3[] enemyPos;
 }
+
+
+/*
+ Wave Data Wiki:
+Wave x Layer of basics behind armors
+Wave x+1 Swarmer swarm
+wave x+2 bombers gaurded by basics
+ 
+ 
+ 
+ 
+ */

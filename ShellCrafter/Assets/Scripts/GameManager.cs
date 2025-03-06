@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject pauseUI;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject[] componentIcons;
+    [SerializeField] Sprite[] icons;
     [SerializeField] AudioClip CannonShot;
     [SerializeField] AudioClip Component;
     [SerializeField] AudioClip Explosion;
@@ -245,8 +246,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         shell[shellIndex] = compIn;
-        componentIcons[shellIndex].SetActive(true);
-        componentIcons[shellIndex].GetComponent<Image>().color = compIn.GetColor();
+        componentIcons[shellIndex].SetActive(true);       
+        componentIcons[shellIndex].GetComponent<Image>().sprite = icons[(int)compIn.getId() - 1];
 
         shellIndex++;
         

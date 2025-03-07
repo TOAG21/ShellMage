@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject wavePicker;
     [SerializeField] GameObject infoPanel;
+    [SerializeField] TMP_Dropdown StupidDropdown;
 
     EnemyManager em;
     int wave = 0;
@@ -17,11 +20,33 @@ public class MenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        dataPath = Application.persistentDataPath + "/data.json";
-        //get waveNumber;
+        dataPath = Application.streamingAssetsPath + "/data.json";
+        try
+        {
+            string json = System.IO.File.ReadAllText(dataPath);
+            waveNumber = JsonUtility.FromJson<WaveNumber>(json);
+        }
+        catch
+        {
+            waveNumber = new WaveNumber();
+            string data = JsonUtility.ToJson(waveNumber);
+            System.IO.File.WriteAllText(dataPath, data);
+        }
 
         em = GetComponent<EnemyManager>();
         baseMenu();
+
+
+        StupidDropdown.ClearOptions();
+        List<string> list = new List<string>();
+        for (int i = 0; i < waveNumber.unlocks.Length; i++)
+        {
+            if (waveNumber.unlocks[i])
+            {
+                list.Add((i * 10).ToString());
+            }
+        }
+        StupidDropdown.AddOptions(list);
     }
 
     // Update is called once per frame
@@ -41,6 +66,9 @@ public class MenuManager : MonoBehaviour
 
     public void Play()
     {
+        waveNumber.selectedWave = StupidDropdown.value * 10;
+        string data = JsonUtility.ToJson(waveNumber);
+        System.IO.File.WriteAllText(dataPath, data);
         SceneManager.LoadScene("SampleScene");
     }
 

@@ -6,7 +6,9 @@ using UnityEngine;
 [Serializable]
 public class WaveNumber
 {
-    bool[] unlocks = new bool[5]; //0-40 by 10
-    int selectedWave = 0;
-    float volume = 1.0f;
+    public bool[] unlocks = new bool[] { true, false, false, false, false }; //0-40 by 10
+    public bool[] compUnlocks = new bool[] {true, false, false, false, false, false, false, false }; //components
+    public bool[] slots = new bool[] {true, false, false, false }; //comp slots
+    public int selectedWave = 0;
+    public float volume = 1.0f;
 }

@@ -40,8 +40,11 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        dataPath = Application.persistentDataPath + "/data.json";
-        //wavenumber here
+        dataPath = Application.streamingAssetsPath + "/data.json";
+        string json = System.IO.File.ReadAllText(dataPath);
+        waveNumber = JsonUtility.FromJson<WaveNumber>(json);
+
+        wave = waveNumber.selectedWave;
 
         ClearShells();
         em = GetComponent<EnemyManager>();
@@ -58,8 +61,23 @@ public class GameManager : MonoBehaviour
         if(em.noEnemies)
         {
             em.SpawnWave(wave);
-            wave++;
             ui.setWave(wave);
+
+            if (wave % 10 == 0)
+            {
+                for (int i = 1; i < 5; i++)
+                {
+                    if (!waveNumber.unlocks[i] && wave == i * 10)
+                    {
+                        waveNumber.unlocks[i] = true;
+                        string data = JsonUtility.ToJson(waveNumber);
+                        System.IO.File.WriteAllText(dataPath, data);
+                    }
+                }
+            }
+
+            wave++;
+
         }
     }
 
@@ -282,6 +300,26 @@ public class GameManager : MonoBehaviour
     {
         health -= damage;
         ui.setHealth(health);
+    }
+
+    void unlockCheck(int waveIn)
+    {
+        switch (waveIn)
+        {
+            case 10:
+                waveNumber.unlocks[1] = true;
+                break;
+            case 20:
+                waveNumber.unlocks[1] = true;
+                break;
+            case 30:
+                waveNumber.unlocks[1] = true;
+                break;
+            case 40:
+                waveNumber.unlocks[1] = true;
+                break;
+            default: break;
+        }
     }
 
     void TogglePause()

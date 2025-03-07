@@ -22,8 +22,8 @@ public class EnemyManager : MonoBehaviour
     void Awake()
     {
         string json;
-        filepath = Application.persistentDataPath + "/WaveData.json";
-        filepathMenu = Application.persistentDataPath + "/WaveDataM.json";
+        filepath = Application.streamingAssetsPath + "/WaveData.json";
+        filepathMenu = Application.streamingAssetsPath + "/WaveDataM.json";
         //Debug.Log(filepath);
 
         /*test serialization

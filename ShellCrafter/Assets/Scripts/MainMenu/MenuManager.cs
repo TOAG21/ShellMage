@@ -47,6 +47,8 @@ public class MenuManager : MonoBehaviour
             }
         }
         StupidDropdown.AddOptions(list);
+
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame

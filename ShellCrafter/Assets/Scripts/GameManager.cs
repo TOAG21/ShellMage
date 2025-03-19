@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -27,6 +29,7 @@ public class GameManager : MonoBehaviour
     float health = 40f;
     EnemyManager em;
     bool paused = false;
+    bool gameover = false;
 
     Component[] shell = new Component[4];
     int shellIndex = 0;
@@ -48,6 +51,8 @@ public class GameManager : MonoBehaviour
 
         ClearShells();
         em = GetComponent<EnemyManager>();
+
+        pauseUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -300,6 +305,14 @@ public class GameManager : MonoBehaviour
     {
         health -= damage;
         ui.setHealth(health);
+
+        if (health <= 0)
+        {
+            gameover = true;
+            Time.timeScale = 0f;
+            pauseUI.SetActive(true);
+            pauseUI.transform.GetChild(1).GetComponent<TMP_Text>().text = "Game Over";
+        }
     }
 
     void unlockCheck(int waveIn)
@@ -322,18 +335,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void TogglePause()
+    
+    public void TogglePause()
     {
+        if(gameover) { return; }
+
         if (!paused)
         {
+            pauseUI.SetActive(true);
             Time.timeScale = 0f;
             paused = true;
         }
         else
         {
+            pauseUI.SetActive(false);
             Time.timeScale = 1f;
             paused = false;
         }
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
 

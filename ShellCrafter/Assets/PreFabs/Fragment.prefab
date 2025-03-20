@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 6760787490002232806, guid: 2edef53119380914e8b4240cc348fc19, type: 3}
   fragment: {fileID: 7655540536342690571}
+  explosion: {fileID: 8300000, guid: 25f92d194bfcbaa42b00349d478b6dfb, type: 3}
+  pierce: {fileID: 8300000, guid: 609e2e01bcfd2f741accd8f73d93ad70, type: 3}
   speed: 10
   pierces: 0
   hitDamage: 15
@@ -110,6 +112,7 @@ MonoBehaviour:
   fragLevel: 0
   knockback: 0
   isFragment: 1
+  enhanced: 0
 --- !u!70 &2767118544733790000
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

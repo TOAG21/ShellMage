@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject[] componentIcons;
     [SerializeField] Sprite[] icons;
     [SerializeField] AudioClip CannonShot;
-    [SerializeField] AudioClip Component;
-    [SerializeField] AudioClip Explosion;
+    [SerializeField] AudioClip[] ComponentAudios;
+    float[] audioVolumes;
     [SerializeField] GameObject Enemy1;
 
 
@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
         em = GetComponent<EnemyManager>();
 
         pauseUI.SetActive(false);
+
+        audioVolumes = new float[] {1.0f, 0.9f, 0.9f, 0.7f, 0.4f, 1.0f, 0.9f, 1.0f };
     }
 
     // Update is called once per frame
@@ -269,12 +271,15 @@ public class GameManager : MonoBehaviour
             return;
         }
         shell[shellIndex] = compIn;
-        componentIcons[shellIndex].SetActive(true);       
-        componentIcons[shellIndex].GetComponent<Image>().sprite = icons[(int)compIn.getId() - 1];
+        componentIcons[shellIndex].SetActive(true);
+
+        int value = (int)compIn.getId() - 1;
+
+        componentIcons[shellIndex].GetComponent<Image>().sprite = icons[value];
 
         shellIndex++;
-        
-        AudioSource.PlayClipAtPoint(Component, Vector3.zero, 0.8f);
+
+        AudioSource.PlayClipAtPoint(ComponentAudios[value], Vector3.zero, audioVolumes[value]);
     }
 
     void ClearShells()

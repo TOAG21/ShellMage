@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionEffect: {fileID: 6760787490002232806, guid: 2edef53119380914e8b4240cc348fc19, type: 3}
   fragment: {fileID: 7655540536342690571, guid: 22da0aece3dc6cc449298317654e5a12, type: 3}
+  explosion: {fileID: 8300000, guid: 31541d7dc715b9b49b7cf8ea0e3d3bcd, type: 3}
+  pierce: {fileID: 8300000, guid: 609e2e01bcfd2f741accd8f73d93ad70, type: 3}
   speed: 10
   pierces: 0
   hitDamage: 15

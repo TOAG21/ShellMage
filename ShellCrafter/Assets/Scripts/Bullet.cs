@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject explosionEffect;
     [SerializeField] GameObject fragment;
+    [SerializeField] AudioClip explosion;
+    [SerializeField] AudioClip pierce;
 
     public float speed = 10f;
     public int pierces = 0;
@@ -100,7 +102,9 @@ public class Bullet : MonoBehaviour
             collision.gameObject.GetComponent<Enemy>().ignite(fireLevel);
         }
         if (pierces > 0) //pierce through objects first
-        { 
+        {
+            AudioSource.PlayClipAtPoint(pierce, transform.position, 1.0f);
+
             pierces--;  
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
 
@@ -167,6 +171,8 @@ public class Bullet : MonoBehaviour
         }
         else //detonate into aoe
         {
+            AudioSource.PlayClipAtPoint(explosion, transform.position, 1.0f);
+
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
             if (enhancement[0])
             {

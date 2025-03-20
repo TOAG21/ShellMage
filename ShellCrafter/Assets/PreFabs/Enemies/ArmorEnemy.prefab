@@ -134,6 +134,9 @@ MonoBehaviour:
   startingHealth: 200
   health: 0
   damage: 2
+  bomber: 0
+  explosionEffect: {fileID: 6760787490002232806, guid: 2edef53119380914e8b4240cc348fc19, type: 3}
+  fireEffect: {fileID: 7062817754381331532, guid: 3a17b1f47901df742b3ec39b6048583a, type: 3}
 --- !u!61 &2319494322722162782
 BoxCollider2D:
   m_ObjectHideFlags: 0

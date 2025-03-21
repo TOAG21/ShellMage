@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Bullet : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Bullet : MonoBehaviour
     public int fireLevel = 0;
     public int fragLevel = 0;
     public float knockback = 0f;
+
+    public float volume = 1f;
 
     public bool isFragment = false;
     public bool enhanced = false;
@@ -103,7 +106,7 @@ public class Bullet : MonoBehaviour
         }
         if (pierces > 0) //pierce through objects first
         {
-            AudioSource.PlayClipAtPoint(pierce, transform.position, 1.0f);
+            AudioSource.PlayClipAtPoint(pierce, transform.position, 1.0f * volume);
 
             pierces--;  
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
@@ -114,7 +117,9 @@ public class Bullet : MonoBehaviour
                 {
                     if (collision.gameObject.GetComponent<Enemy>().health <= 0)
                     {
-                        GameObject.Instantiate(explosionEffect, collision.gameObject.transform.position, Quaternion.identity);
+                        GameObject explosion = GameObject.Instantiate(explosionEffect, collision.gameObject.transform.position, Quaternion.identity);
+                        explosion.transform.GetChild(0).localScale = Vector3.one * aoeSize / 0.3f;
+                        explosion.transform.GetChild(1).localScale = Vector3.one * (1f + aoeSize - 0.3f);
                         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(this.transform.position.x, this.transform.position.y), 1.5f);
                         foreach (var hitCollider in hitColliders)
                         {
@@ -171,14 +176,16 @@ public class Bullet : MonoBehaviour
         }
         else //detonate into aoe
         {
-            AudioSource.PlayClipAtPoint(explosion, transform.position, 1.0f);
+            AudioSource.PlayClipAtPoint(explosion, transform.position, 1.0f * volume);
 
             collision.gameObject.GetComponent<Enemy>().damaged(hitDamage);
             if (enhancement[0])
             {
                 if (collision.gameObject.GetComponent<Enemy>().health <= 0)
                 {
-                    GameObject.Instantiate(explosionEffect, collision.gameObject.transform.position, Quaternion.identity);
+                    GameObject explosion = GameObject.Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                    explosion.transform.GetChild(0).localScale = Vector3.one * aoeSize / 0.3f;
+                    explosion.transform.GetChild(1).localScale = Vector3.one * (1f + aoeSize - 0.3f);
                     Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(this.transform.position.x, this.transform.position.y), 1.5f);
                     foreach (var hitCollider in hitColliders)
                     {
@@ -257,7 +264,9 @@ public class Bullet : MonoBehaviour
 
     void Explosion(float size, float damage)
     {
-        GameObject.Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        GameObject explosion = GameObject.Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        explosion.transform.GetChild(0).localScale = Vector3.one * aoeSize / 0.3f;
+        explosion.transform.GetChild(1).localScale = Vector3.one * (1f + aoeSize - 0.3f);
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(new Vector2(this.transform.position.x, this.transform.position.y), size);
         foreach (var hitCollider in hitColliders)
         {

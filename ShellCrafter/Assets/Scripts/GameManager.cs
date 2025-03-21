@@ -158,6 +158,7 @@ public class GameManager : MonoBehaviour
 
         bullet = GameObject.Instantiate(bulletPrefab, turret.transform.GetChild(0).position, turret.transform.rotation).GetComponent<Bullet>();
         AddStats();
+        bullet.volume = waveNumber.volume;
 
         if (enhancementEleven)
         {
@@ -179,7 +180,7 @@ public class GameManager : MonoBehaviour
             enhancementEleven = false;
         }
 
-        AudioSource.PlayClipAtPoint(CannonShot, Vector3.zero, 100f);
+        AudioSource.PlayClipAtPoint(CannonShot, Vector3.zero, 1f * waveNumber.volume);
     }
 
     void AddStats()
@@ -279,7 +280,7 @@ public class GameManager : MonoBehaviour
 
         shellIndex++;
 
-        AudioSource.PlayClipAtPoint(ComponentAudios[value], Vector3.zero, audioVolumes[value]);
+        AudioSource.PlayClipAtPoint(ComponentAudios[value], Vector3.zero, audioVolumes[value] * waveNumber.volume);
     }
 
     void ClearShells()

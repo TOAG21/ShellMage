@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject wavePicker;
     [SerializeField] GameObject infoPanel;
     [SerializeField] TMP_Dropdown StupidDropdown;
+    [SerializeField] Slider slider;
 
     EnemyManager em;
     int wave = 0;
@@ -69,6 +70,7 @@ public class MenuManager : MonoBehaviour
     public void Play()
     {
         waveNumber.selectedWave = StupidDropdown.value * 10;
+        waveNumber.volume = slider.value;
         string data = JsonUtility.ToJson(waveNumber);
         System.IO.File.WriteAllText(dataPath, data);
         SceneManager.LoadScene("SampleScene");

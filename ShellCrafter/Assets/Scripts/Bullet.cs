@@ -91,7 +91,9 @@ public class Bullet : MonoBehaviour
                 }
                 if (enhancement[10])
                 {
-                    //addfragment knocback
+                    Vector3 temp = collision.gameObject.transform.position;
+                    temp.y += knockback / 20f;
+                    collision.gameObject.GetComponent<Enemy>().knockback(temp);
                 }
             }
 
@@ -99,7 +101,12 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        //add knockback usage
+        if(knockback > 0f)
+        {//66 = 2
+            Vector3 temp = collision.gameObject.transform.position;
+            temp.y += knockback / 20f;
+            collision.gameObject.GetComponent<Enemy>().knockback(temp);
+        }
         if(fireLevel > 0)//ignite hit enemies
         {
             collision.gameObject.GetComponent<Enemy>().ignite(fireLevel);

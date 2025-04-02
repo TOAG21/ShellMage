@@ -33,28 +33,37 @@ public class GameManager : MonoBehaviour
 
     Component[] shell = new Component[4];
     int shellIndex = 0;
+    int shellLimit = 0;
     float fireCooldown = 0.0f;
 
     Vector3 mousePos;
 
     string dataPath;
-    WaveNumber waveNumber;
+    WaveNumber dataFile;
 
     // Start is called before the first frame update
     void Awake()
     {
         dataPath = Application.streamingAssetsPath + "/data.json";
         string json = System.IO.File.ReadAllText(dataPath);
-        waveNumber = JsonUtility.FromJson<WaveNumber>(json);
+        dataFile = JsonUtility.FromJson<WaveNumber>(json);
 
-        wave = waveNumber.selectedWave;
+        wave = dataFile.selectedWave;
 
-        ClearShells();
         em = GetComponent<EnemyManager>();
 
         pauseUI.SetActive(false);
 
         audioVolumes = new float[] {1.0f, 0.9f, 0.9f, 0.7f, 0.4f, 1.0f, 0.9f, 1.0f };
+        foreach (bool slot in dataFile.slots)
+        {
+            if(slot)
+            {
+                shellLimit++;
+            }
+        }
+        ClearShells();
+        ui.setLocks(dataFile.slots, dataFile.compUnlocks);
     }
 
     // Update is called once per frame
@@ -70,18 +79,8 @@ public class GameManager : MonoBehaviour
             em.SpawnWave(wave);
             ui.setWave(wave);
 
-            if (wave % 10 == 0)
-            {
-                for (int i = 1; i < 5; i++)
-                {
-                    if (!waveNumber.unlocks[i] && wave == i * 10)
-                    {
-                        waveNumber.unlocks[i] = true;
-                        string data = JsonUtility.ToJson(waveNumber);
-                        System.IO.File.WriteAllText(dataPath, data);
-                    }
-                }
-            }
+            unlockCheck(wave);
+            ui.setLocks(dataFile.slots, dataFile.compUnlocks);
 
             wave++;
 
@@ -98,45 +97,46 @@ public class GameManager : MonoBehaviour
         if (paused) { return; }
 
         //load shells
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && dataFile.compUnlocks[0])
         {
             LoadShell(Components.getComponent(componentID.HIGH_EXPLOSIVE));
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && dataFile.compUnlocks[1])
         {
             LoadShell(Components.getComponent(componentID.ARMOR_PIERCING));
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && dataFile.compUnlocks[2])
         {
             LoadShell(Components.getComponent(componentID.FRAGMENTATION));
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && dataFile.compUnlocks[3])
         {
             LoadShell(Components.getComponent(componentID.INCENDIARY));
         }
         ////////////////////////////////////////////
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && dataFile.compUnlocks[4])
         {
             LoadShell(Components.getComponent(componentID.TUNGSTEN));
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && dataFile.compUnlocks[5])
         {
             LoadShell(Components.getComponent(componentID.RAILGUN));
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && dataFile.compUnlocks[6])
         {
             LoadShell(Components.getComponent(componentID.NUCLEAR));
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && dataFile.compUnlocks[7])
         {
             LoadShell(Components.getComponent(componentID.ENHANCEMENT));
         }
 
-        //for dev testing
+        /*for dev testing
         if (Input.GetKeyDown(KeyCode.Z))
         {
             GameObject.Instantiate(Enemy1, new Vector3(UnityEngine.Random.Range(-7, 7f), 4f, 0f), Quaternion.Euler(Vector3.zero));
         }
+        */
 
         //shoot turret
         if (Input.GetMouseButtonDown(0) && fireCooldown < 0.0f)
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
 
         bullet = GameObject.Instantiate(bulletPrefab, turret.transform.GetChild(0).position, turret.transform.rotation).GetComponent<Bullet>();
         AddStats();
-        bullet.volume = waveNumber.volume;
+        bullet.volume = dataFile.volume;
 
         if (enhancementEleven)
         {
@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
             enhancementEleven = false;
         }
 
-        AudioSource.PlayClipAtPoint(CannonShot, Vector3.zero, 1f * waveNumber.volume);
+        AudioSource.PlayClipAtPoint(CannonShot, Vector3.zero, 1f * dataFile.volume);
     }
 
     void AddStats()
@@ -256,6 +256,8 @@ public class GameManager : MonoBehaviour
                                 default: break;
                             }
                         }
+                        if(enhance != "")
+                        { break; }
                     }
                     if (three) { bullet.aoeSize -= 0.1f; bullet.aoeDamage += 25; }
                     break;
@@ -267,7 +269,7 @@ public class GameManager : MonoBehaviour
 
     void LoadShell(Component compIn)
     {
-        if (shellIndex >= 4)
+        if (shellIndex >= shellLimit)
         {
             return;
         }
@@ -280,20 +282,25 @@ public class GameManager : MonoBehaviour
 
         shellIndex++;
 
-        AudioSource.PlayClipAtPoint(ComponentAudios[value], Vector3.zero, audioVolumes[value] * waveNumber.volume);
+        AudioSource.PlayClipAtPoint(ComponentAudios[value], Vector3.zero, audioVolumes[value] * dataFile.volume);
     }
 
     void ClearShells()
     {
         shellIndex = 0;
-        shell[0] = Components.getComponent(componentID.EMPTY);
-        componentIcons[0].SetActive(false);
-        shell[1] = Components.getComponent(componentID.EMPTY);
-        componentIcons[1].SetActive(false);
-        shell[2] = Components.getComponent(componentID.EMPTY);
-        componentIcons[2].SetActive(false);
-        shell[3] = Components.getComponent(componentID.EMPTY);
-        componentIcons[3].SetActive(false);
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < shellLimit)
+            {
+                shell[i] = Components.getComponent(componentID.EMPTY);
+                componentIcons[i].SetActive(false);
+            }
+            else
+            {
+                shell[i] = Components.getComponent(componentID.EMPTY);
+                componentIcons[i].SetActive(true);
+            }
+        }
     }
 
     void pointTurret()
@@ -325,20 +332,50 @@ public class GameManager : MonoBehaviour
     {
         switch (waveIn)
         {
+            case 1:
+                if (!dataFile.slots[1]) { shellLimit++; }
+                dataFile.slots[1] = true;
+                break;
+            case 2:
+                dataFile.compUnlocks[1] = true;
+                break;
+            case 5:
+                dataFile.compUnlocks[2] = true;
+                break;
+            case 7:
+                dataFile.compUnlocks[3] = true;
+                break;
             case 10:
-                waveNumber.unlocks[1] = true;
+                dataFile.unlocks[1] = true;
+                if (!dataFile.slots[2]) { shellLimit++; }
+                dataFile.slots[2] = true;
+                break;
+            case 12:
+                dataFile.compUnlocks[4] = true;
+                break;
+            case 14:
+                dataFile.compUnlocks[5] = true;
+                break;
+            case 17:
+                dataFile.compUnlocks[6] = true;
                 break;
             case 20:
-                waveNumber.unlocks[1] = true;
+                dataFile.unlocks[2] = true;
+                if (!dataFile.slots[3]) { shellLimit++; }
+                dataFile.slots[3] = true;
+                dataFile.compUnlocks[7] = true;
                 break;
             case 30:
-                waveNumber.unlocks[1] = true;
+                dataFile.unlocks[3] = true;
                 break;
             case 40:
-                waveNumber.unlocks[1] = true;
+                dataFile.unlocks[4] = true;
                 break;
             default: break;
         }
+
+        string data = JsonUtility.ToJson(dataFile);
+        System.IO.File.WriteAllText(dataPath, data);
     }
 
     

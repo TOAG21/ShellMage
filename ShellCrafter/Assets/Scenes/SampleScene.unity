@@ -1700,6 +1700,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 1907688876}
   wave: {fileID: 612169955}
+  slots:
+  - {fileID: 1260621671}
+  - {fileID: 1447502620}
+  - {fileID: 1739679830}
+  - {fileID: 361059465}
+  comps:
+  - {fileID: 774743370}
+  - {fileID: 1576640021}
+  - {fileID: 916504815}
+  - {fileID: 2108485548}
+  - {fileID: 333188981}
+  - {fileID: 1751149122}
+  - {fileID: 356241303}
+  - {fileID: 779623632}
+  images:
+  - {fileID: 21300000, guid: 9ace7286e9f2f1a43ab8f8fae1b3fb2c, type: 3}
+  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 21300000, guid: 13770d1c3201b2c4fb198fc603c7606d, type: 3}
+  - {fileID: 21300000, guid: 17286e63c37281249b888b60e58d1bb3, type: 3}
+  - {fileID: 21300000, guid: 2eea467cbcc1a9b459809f13dac5f0a2, type: 3}
+  - {fileID: 21300000, guid: b22880df8e50ccb4aa8789c40d0e305c, type: 3}
+  - {fileID: 21300000, guid: 50835c652e77b4e4986be581967dd252, type: 3}
+  - {fileID: 21300000, guid: 7d1e06ea07538ff429ee1367a33f8178, type: 3}
+  - {fileID: 21300000, guid: 8fa477ba9afee1a479aeec848ea6bbdf, type: 3}
+  - {fileID: 21300000, guid: acc91e2ba1e6a5047a16c7d0556ed036, type: 3}
 --- !u!114 &729806901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,7 +2556,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1052102278
 RectTransform:
   m_ObjectHideFlags: 0

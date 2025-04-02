@@ -9,6 +9,8 @@ public class MenuManager : MonoBehaviour
 {
     [SerializeField] GameObject wavePicker;
     [SerializeField] GameObject infoPanel;
+    [SerializeField] GameObject page1;
+    [SerializeField] GameObject page2;
     [SerializeField] TMP_Dropdown StupidDropdown;
     [SerializeField] Slider slider;
 
@@ -48,6 +50,7 @@ public class MenuManager : MonoBehaviour
             }
         }
         StupidDropdown.AddOptions(list);
+        slider.value = waveNumber.volume;
 
         Time.timeScale = 1f;
     }
@@ -79,11 +82,28 @@ public class MenuManager : MonoBehaviour
     public void Info()
     {
         infoPanel.SetActive(true);
+        page1.SetActive(true);
+        page2.SetActive(false);
+    }
+    public void togglePage()
+    {
+        if (page1.activeSelf)
+        {
+            page1.SetActive(false);
+            page2.SetActive(true);
+        }
+        else
+        {
+            page1.SetActive(true);
+            page2.SetActive(false);
+        }
     }
 
     public void baseMenu()
     {
         wavePicker.SetActive(false);
+        page1.SetActive(true);
+        page2.SetActive(false);
         infoPanel.SetActive(false);
     }
 

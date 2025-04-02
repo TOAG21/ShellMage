@@ -92,4 +92,9 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+    public void knockback(Vector3 newPos)
+    {
+        pos = newPos;
+    }
 }

@@ -131,12 +131,28 @@ public class GameManager : MonoBehaviour
             LoadShell(Components.getComponent(componentID.ENHANCEMENT));
         }
 
-        /*for dev testing
+        /*for dev testing*/
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            GameObject.Instantiate(Enemy1, new Vector3(UnityEngine.Random.Range(-7, 7f), 4f, 0f), Quaternion.Euler(Vector3.zero));
+            if (!dataFile.slots[1]) { shellLimit++; }
+            dataFile.slots[1] = true;
+            dataFile.compUnlocks[1] = true;
+            dataFile.compUnlocks[2] = true;
+            dataFile.compUnlocks[3] = true;
+            dataFile.unlocks[1] = true;
+            if (!dataFile.slots[2]) { shellLimit++; }
+            dataFile.slots[2] = true;
+            dataFile.compUnlocks[4] = true;
+            dataFile.compUnlocks[5] = true;
+            dataFile.compUnlocks[6] = true;
+            dataFile.unlocks[2] = true;
+            if (!dataFile.slots[3]) { shellLimit++; }
+            dataFile.slots[3] = true;
+            dataFile.compUnlocks[7] = true;
+            dataFile.unlocks[3] = true;
+            dataFile.unlocks[4] = true;
         }
-        */
+        
 
         //shoot turret
         if (Input.GetMouseButtonDown(0) && fireCooldown < 0.0f)

@@ -110,9 +110,19 @@ public class Wave
     public Vector3[] enemyPos;
 }
 
-
+//basic, swarmer, bomber, captain, armor, big armor
 /*
  Wave Data Wiki:
+Wave 1: 3 basic enemies
+Wave 2: 1 armor + 2 basic behind - piercing tutorial
+Wave 3: 2 armor + 2 basic
+Wave 4: 3 groups of 2 swarmers
+Wave 5: swarmers circling an armor
+Wave 6: 2 groups of 4 basics - diamond one normal basic
+Wave 7: 2 groups of 4 armors - flat
+Wave 8:
+Wave 9: 1 captain
+
 Wave x Layer of basics behind armors
 Wave x+1 Swarmer swarm
 wave x+2 bombers gaurded by basics

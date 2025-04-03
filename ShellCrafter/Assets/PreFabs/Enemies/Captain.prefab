@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5f94f64e8987940bf20a24ea417c7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 500
+  startingHealth: 700
   health: 0
   damage: 10
   bomber: 0

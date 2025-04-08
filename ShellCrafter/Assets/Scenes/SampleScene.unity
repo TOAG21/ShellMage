@@ -1716,6 +1716,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ff2675674ff856f4db352d9a927ec75e, type: 3}
   - {fileID: 8300000, guid: c982b65421099ea4ba5489f8358f1834, type: 3}
   - {fileID: 8300000, guid: 22350e94edead914884d673ae1d150ac, type: 3}
+  - {fileID: 8300000, guid: 9cafec4209a0b324baaa7bebe81ab64f, type: 3}
   Enemy1: {fileID: 8380420204547382344, guid: f40ca3a56c05804498cd58fe7302213e, type: 3}
 --- !u!114 &729806900
 MonoBehaviour:

@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     int shellIndex = 0;
     int shellLimit = 0;
     float fireCooldown = 0.0f;
+    bool ghostInput = false;
+    bool reloadAudio = true;
 
     Vector3 mousePos;
 
@@ -72,7 +74,13 @@ public class GameManager : MonoBehaviour
         pointTurret();
         if(fireCooldown >= 0.0f) { fireCooldown -= Time.deltaTime; }
 
-        InputCheck();    
+        if (!reloadAudio && fireCooldown < 0.0f)
+        {
+            AudioSource.PlayClipAtPoint(ComponentAudios[8], Vector3.zero);
+            reloadAudio = true;
+        }
+
+        InputCheck();        
         
         if(em.noEnemies)
         {
@@ -83,7 +91,6 @@ public class GameManager : MonoBehaviour
             ui.setLocks(dataFile.slots, dataFile.compUnlocks);
 
             wave++;
-
         }
     }
 
@@ -155,11 +162,17 @@ public class GameManager : MonoBehaviour
         
 
         //shoot turret
-        if (Input.GetMouseButtonDown(0) && fireCooldown < 0.0f)
+        if ((Input.GetMouseButtonDown(0) || ghostInput) && fireCooldown < 0.0f)
         {
             Shoot();
             fireCooldown = 1.0f;
+            ghostInput = false;
+            reloadAudio = false;
             ClearShells();
+        }
+        else if (Input.GetMouseButtonDown(0) && fireCooldown < 0.25f)
+        {
+            ghostInput = true;
         }
 
         //airburst last shell

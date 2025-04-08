@@ -40,12 +40,12 @@ public class UImanager : MonoBehaviour
     {
         for (int i = 0; i < slotsIn.Length; i++)
         {
-            if (slotsIn[i])
+            if (slotsIn[i] && slots[i].sprite == images[0])
             {
                 slots[i].sprite = images[1];
                 slots[i].gameObject.SetActive(false);
             }
-            else
+            else if(!slotsIn[i])
             {
                 slots[i].sprite = images[0];
             }

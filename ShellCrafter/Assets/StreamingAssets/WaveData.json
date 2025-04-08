@@ -1,6 +1,16 @@
 {
   "waves": [
     {
+      "enemyType": [ 0 ],
+      "enemyPos": [
+        {
+          "x": 0.0,
+          "y": 8.0,
+          "z": 0.0
+        }
+      ]
+    },
+    {
       "enemyType": [ 0, 0, 0 ],
       "enemyPos": [
         {

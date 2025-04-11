@@ -97,4 +97,9 @@ public class Enemy : MonoBehaviour
     {
         pos = newPos;
     }
+
+    public void multSHP(float multiplier)
+    {
+        startingHealth *= multiplier;
+    }
 }

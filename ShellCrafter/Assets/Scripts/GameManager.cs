@@ -375,6 +375,7 @@ public class GameManager : MonoBehaviour
                 dataFile.compUnlocks[3] = true;
                 break;
             case 10:
+                health = 40;
                 dataFile.unlocks[1] = true;
                 if (!dataFile.slots[2]) { shellLimit++; }
                 dataFile.slots[2] = true;
@@ -389,15 +390,18 @@ public class GameManager : MonoBehaviour
                 dataFile.compUnlocks[6] = true;
                 break;
             case 20:
+                health = 40;
                 dataFile.unlocks[2] = true;
                 if (!dataFile.slots[3]) { shellLimit++; }
                 dataFile.slots[3] = true;
                 dataFile.compUnlocks[7] = true;
                 break;
             case 30:
+                health = 40;
                 dataFile.unlocks[3] = true;
                 break;
             case 40:
+                health = 40;
                 dataFile.unlocks[4] = true;
                 break;
             default: break;

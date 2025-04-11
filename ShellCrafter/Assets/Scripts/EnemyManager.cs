@@ -12,6 +12,8 @@ public class EnemyManager : MonoBehaviour
     WaveHolder waveHolder;
     public bool noEnemies = true;
     List<GameObject> enemies = new List<GameObject>();
+    int loopTracker = 0;
+    float healthMult = 1.0f;
 
     string filepath;
     string filepathMenu;
@@ -74,6 +76,7 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnWave(int waveNum)
     {
+        waveNum = waveNum - loopTracker * waveHolder.waves.Length;
         if (waveNum > waveHolder.waves.Length - 1) { waveNum = waveLoop(waveNum); }
 
         Wave wave = waveHolder.waves[waveNum];
@@ -82,15 +85,20 @@ public class EnemyManager : MonoBehaviour
         {
             enemies.Add(GameObject.Instantiate(EnemyPrefabs[wave.enemyType[i]], wave.enemyPos[i], Quaternion.Euler(Vector3.zero)));
         }
+        for (int i = 0; i < wave.enemyType.Length; i++)
+        {
+            enemies[i].GetComponent<Enemy>().health *= healthMult;
+            enemies[i].GetComponent<Enemy>().multSHP(healthMult);
+        }
     }
 
     int waveLoop(int waveIn)
     {
-        if (waveIn > waveHolder.waves.Length - 1)
-        {
-            waveIn -= waveHolder.waves.Length;
-            waveIn = waveLoop(waveIn);
-        }
+        loopTracker++;
+        waveIn -= waveHolder.waves.Length;
+
+        //enemy health increases with each loop     ----      50% more?
+        healthMult += 0.5f;
 
         return waveIn;
     }

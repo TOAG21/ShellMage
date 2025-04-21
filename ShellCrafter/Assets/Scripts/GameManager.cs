@@ -407,6 +407,9 @@ public class GameManager : MonoBehaviour
             default: break;
         }
 
+        if (dataFile.waveRecord < waveIn)
+        { dataFile.waveRecord = waveIn; }
+
         string data = JsonUtility.ToJson(dataFile);
         System.IO.File.WriteAllText(dataPath, data);
     }

@@ -121,26 +121,48 @@ public class Wave
 //basic, swarmer, bomber, captain, armor, big armor
 /*
  Wave Data Wiki:
-Wave 0: 1 basic
-Wave 1: 3 basic enemies
-Wave 2: 1 armor + 2 basic behind - piercing tutorial
-Wave 3: 2 armor + 2 basic
-Wave 4: 3 groups of 2 swarmers
-Wave 5: swarmers circling an armor
-Wave 6: 2 groups of 4 basics - diamond one normal basic
-Wave 7: 2 groups of 4 armors - flat
-Wave 8: 5 armors 5 basics
-Wave 9: 1 captain
+Wave  0: 1 basic
+Wave  1: 3 basic enemies
+Wave  2: 1 armor + 2 basic behind - piercing tutorial
+Wave  3: 2 armor + 2 basic
+Wave  4: 3 groups of 2 swarmers
+Wave  5: swarmers circling an armor
+Wave  6: 2 groups of 4 basics - diamond one normal basic
+Wave  7: 2 groups of 4 armors - flat
+Wave  8: 5 armors 5 basics
+Wave  9: 1 captain
 Wave 10: 9 basics 2 bombers
 Wave 11: 5 armors 5 bombers V fligth pattern
 Wave 12: 5 armors single file
 Wave 13: 2 captains
-Wave 14: 3 armors 4 basics all in line
-Wave 15:
-Wave 16:
+Wave 14: 3 armors 5 basics all in line
+Wave 15: 4 groups of armor -> basic >swarmers
+Wave 16: 3 armors in front of a captain
 Wave 17: mass of swarmers horseshoe shape
+Wave 18: Big armor with 9 grouped basics
+Wave 19: 3 captains 2 big armors
+Wave 20: Layer of basics behind armors
+Wave 21: 
+Wave 22: 
+Wave 23: 
+Wave 24: 
+Wave 25: 
+Wave 26: 
+Wave 27: 
+Wave 28: 
+Wave 29: 
+Wave 30: 
+Wave 31: 
+Wave 32: 
+Wave 33: 
+Wave 34: 
+Wave 35:
+Wave 36: 
+Wave 37: 
+Wave 38: 
+Wave 39: 8 captains 3 big armors
+Wave 40: 
 
-Wave x Layer of basics behind armors
 Wave x+1 Swarmer swarm
 wave x+2 bombers gaurded by basics
  

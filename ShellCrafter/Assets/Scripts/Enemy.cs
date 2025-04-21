@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float damage = 1f;
     public bool bomber;
     public GameObject explosionEffect;
-    float bomberDamage = 30f;
+    float bomberDamage = 60f;
 
     float fireDamage = 0.0f;
     [SerializeField] GameObject fireEffect;

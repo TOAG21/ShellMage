@@ -11,6 +11,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] GameObject infoPanel;
     [SerializeField] GameObject page1;
     [SerializeField] GameObject page2;
+    [SerializeField] TMP_Text record;
     [SerializeField] TMP_Dropdown StupidDropdown;
     [SerializeField] Slider slider;
 
@@ -39,6 +40,7 @@ public class MenuManager : MonoBehaviour
         em = GetComponent<EnemyManager>();
         baseMenu();
 
+        record.text = waveNumber.waveRecord.ToString();
 
         StupidDropdown.ClearOptions();
         List<string> list = new List<string>();
@@ -110,5 +112,24 @@ public class MenuManager : MonoBehaviour
     public void Stop()
     {
         Application.Quit();
+    }
+
+    public void resetSave()
+    {
+        waveNumber = new WaveNumber();
+        string data = JsonUtility.ToJson(waveNumber);
+        System.IO.File.WriteAllText(dataPath, data);
+
+        StupidDropdown.ClearOptions();
+        List<string> list = new List<string>();
+        for (int i = 0; i < waveNumber.unlocks.Length; i++)
+        {
+            if (waveNumber.unlocks[i])
+            {
+                list.Add((i * 10).ToString());
+            }
+        }
+        StupidDropdown.AddOptions(list);
+        slider.value = waveNumber.volume;
     }
 }

@@ -10,5 +10,6 @@ public class WaveNumber
     public bool[] compUnlocks = new bool[] {true, false, false, false, false, false, false, false }; //components
     public bool[] slots = new bool[] {true, false, false, false }; //comp slots
     public int selectedWave = 0;
+    public int waveRecord = 0;
     public float volume = 1.0f;
 }

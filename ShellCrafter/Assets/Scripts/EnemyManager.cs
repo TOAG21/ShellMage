@@ -142,9 +142,9 @@ Wave 17: mass of swarmers horseshoe shape
 Wave 18: Big armor with 9 grouped basics
 Wave 19: 3 captains 2 big armors
 Wave 20: Layer of basics behind armors
-Wave 21: 
-Wave 22: 
-Wave 23: 
+Wave 21: Swarmers in front of armor gaurding bombers
+Wave 22: 8 armors then 6 basics in helix
+Wave 23: 6 captains in 2 rows
 Wave 24: 
 Wave 25: 
 Wave 26: 
@@ -163,10 +163,6 @@ Wave 38:
 Wave 39: 8 captains 3 big armors
 Wave 40: 
 
-Wave x+1 Swarmer swarm
-wave x+2 bombers gaurded by basics
- 
- 
- 
+Wave x+1 Swarmer swarm 
  
  */

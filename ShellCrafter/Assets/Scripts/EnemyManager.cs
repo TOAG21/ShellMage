@@ -117,7 +117,7 @@ public class Wave
     //positions must be between (-9,9) and (6,15)
     public Vector3[] enemyPos;
 }
-
+//  0      1        2      3         4       5
 //basic, swarmer, bomber, captain, armor, big armor
 /*
  Wave Data Wiki:
@@ -145,24 +145,11 @@ Wave 20: Layer of basics behind armors
 Wave 21: Swarmers in front of armor gaurding bombers
 Wave 22: 8 armors then 6 basics in helix
 Wave 23: 6 captains in 2 rows
-Wave 24: 
-Wave 25: 
-Wave 26: 
-Wave 27: 
-Wave 28: 
-Wave 29: 
-Wave 30: 
-Wave 31: 
-Wave 32: 
-Wave 33: 
-Wave 34: 
-Wave 35:
-Wave 36: 
-Wave 37: 
-Wave 38: 
-Wave 39: 8 captains 3 big armors
-Wave 40: 
-
-Wave x+1 Swarmer swarm 
+Wave 24: 2 Big armors and 6 bombers
+Wave 25: 6 armors 2 captains 5 swarmers in W formation
+Wave 26: 4 rows of five bombers
+Wave 27: 4 rows of 4 armors
+Wave 28: 1 big armor 6 basics 1 captain
+Wave 29: 8 captains 3 big armors
  
  */

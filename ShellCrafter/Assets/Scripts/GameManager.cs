@@ -258,9 +258,18 @@ public class GameManager : MonoBehaviour
                             int j;
                             for (j = i + 1; j < 4; j++)
                             {
-                                if (shell[j].getId() != componentID.EMPTY && shell[j].getId() != componentID.ENHANCEMENT) { break; }
+                                if (shell[j].getId() != componentID.EMPTY && shell[j].getId() != componentID.ENHANCEMENT)
+                                {
+                                    if (shell[i].getId() != componentID.RAILGUN && shell[i].getId() == shell[j].getId()) 
+                                    { 
+                                        continue;
+                                    }
+
+                                    break;
+                                }
                                 if(j == 3) { j = 0; break; }
                             }
+
                             if(j == 0) { break; }
 
                             enhance = ((int)shell[i].getId()).ToString() + ((int)shell[j].getId()).ToString();
@@ -269,7 +278,7 @@ public class GameManager : MonoBehaviour
                                 case "12" or "21": bullet.addEnhancement(0);    break;
                                 case "13" or "31": bullet.addEnhancement(1);    break;
                                 case "14" or "41": bullet.addEnhancement(2);    break;
-                                case "15" or "51":  three = true;               break;
+                                case "15" or "51": three = true;               break;
                                 case "16" or "61": bullet.addEnhancement(4);    break;
                                 case "23" or "32": bullet.addEnhancement(5);    break;
                                 case "24" or "42": bullet.addEnhancement(6);    break;
@@ -288,7 +297,7 @@ public class GameManager : MonoBehaviour
                         if(enhance != "")
                         { break; }
                     }
-                    if (three) { bullet.aoeSize -= 0.1f; bullet.aoeDamage += 25; }
+                    if (three) { bullet.aoeSize -= 0.1f; bullet.aoeDamage += 75f; }
                     break;
                 default:
                     break;
@@ -359,6 +368,12 @@ public class GameManager : MonoBehaviour
 
     void unlockCheck(int waveIn)
     {
+        if(waveIn % 10 == 0)
+        {
+            health = 40;
+            ui.setHealth(health);
+        }
+
         switch (waveIn)
         {
             case 1:
@@ -375,7 +390,6 @@ public class GameManager : MonoBehaviour
                 dataFile.compUnlocks[3] = true;
                 break;
             case 10:
-                health = 40;
                 dataFile.unlocks[1] = true;
                 if (!dataFile.slots[2]) { shellLimit++; }
                 dataFile.slots[2] = true;
@@ -390,19 +404,13 @@ public class GameManager : MonoBehaviour
                 dataFile.compUnlocks[6] = true;
                 break;
             case 20:
-                health = 40;
                 dataFile.unlocks[2] = true;
                 if (!dataFile.slots[3]) { shellLimit++; }
                 dataFile.slots[3] = true;
                 dataFile.compUnlocks[7] = true;
                 break;
             case 30:
-                health = 40;
                 dataFile.unlocks[3] = true;
-                break;
-            case 40:
-                health = 40;
-                dataFile.unlocks[4] = true;
                 break;
             default: break;
         }

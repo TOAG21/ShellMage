@@ -39,7 +39,6 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log(collision.collider.gameObject.tag);
         if (collision.gameObject.tag == "wall")
         { Destroy(gameObject); }
         if (collision.gameObject.tag != "enemy")
@@ -47,6 +46,10 @@ public class Bullet : MonoBehaviour
 
         if (enhanced)
         {
+            if (enhancement[5])
+            {
+                pierces = 0;
+            }
             if (enhancement[8])
             {
                 pierces = 0;
@@ -85,6 +88,26 @@ public class Bullet : MonoBehaviour
                     pierces--;
                     return;
                 }
+                if (enhancement[8])
+                {
+                    for (int i = 0; i < fragLevel; i++)
+                    {
+                        for (int f = 0; f < 3; f++)
+                        {
+                            Vector3 rot;
+                            fragHolder = GameObject.Instantiate(fragment, transform.position - new Vector3(0f, 0.3f, 0f), Quaternion.identity);
+                            rot = fragHolder.transform.rotation.eulerAngles;
+                            rot.z = transform.rotation.eulerAngles.z + UnityEngine.Random.Range(-30.0f, 30.0f);
+                            fragHolder.transform.rotation = Quaternion.Euler(rot);
+                            fragHolder.GetComponent<Rigidbody2D>().velocity = fragHolder.transform.up * fragHolder.GetComponent<Bullet>().speed;
+                            fragHolder.GetComponent<Bullet>().pierces = 2;
+                            fragHolder.GetComponent<Bullet>().enhanced = true;
+                        }
+                    }
+
+                    Destroy(gameObject);
+                    return;
+                }
                 if (enhancement[9])
                 {
                     collision.gameObject.GetComponent<Enemy>().ignite(2);
@@ -92,7 +115,7 @@ public class Bullet : MonoBehaviour
                 if (enhancement[10])
                 {
                     Vector3 temp = collision.gameObject.transform.position;
-                    temp.y += knockback / 20f;
+                    temp.y += 1f;
                     collision.gameObject.GetComponent<Enemy>().knockback(temp);
                 }
             }
@@ -145,12 +168,12 @@ public class Bullet : MonoBehaviour
                 {
                     if (collision.gameObject.GetComponent<Enemy>().isBurning())
                     {
-                        Explosion(aoeSize, aoeDamage);
+                        Explosion(aoeSize * 4, aoeDamage * 5);
                     }
                 }
                 if (enhancement[7])
                 {
-                    hitDamage += 15f;
+                    hitDamage += 30f;
                 }
                 if (enhancement[12])
                 {
@@ -202,26 +225,7 @@ public class Bullet : MonoBehaviour
                         }
                     }
                 }
-            }
-            if (enhancement[8])
-            {
-                for (int i = 0; i < fragLevel; i++)
-                {
-                    for (int f = 0; f < 3; f++)
-                    {
-                        Vector3 rot;
-                        fragHolder = GameObject.Instantiate(fragment, transform.position - new Vector3(0f, 0.3f, 0f), Quaternion.identity);
-                        rot = fragHolder.transform.rotation.eulerAngles;
-                        rot.z = UnityEngine.Random.Range(-30.0f, 30.0f);
-                        fragHolder.transform.rotation = Quaternion.Euler(rot);
-                        fragHolder.GetComponent<Rigidbody2D>().velocity = fragHolder.transform.up * fragHolder.GetComponent<Bullet>().speed;
-                        fragHolder.GetComponent<Bullet>().pierces++;
-                    }
-                }
-
-                Destroy(gameObject);
-                return;
-            }
+            }            
 
             Explosion(aoeSize, aoeDamage);
             
@@ -251,7 +255,7 @@ public class Bullet : MonoBehaviour
                     if (enhanced)
                     {
                         if (enhancement[1]) { fragHolder.GetComponent<Bullet>().addEnhancement(1); }
-                        if (enhancement[5]) { fragHolder.GetComponent<Bullet>().pierces++; }
+                        if (enhancement[5]) { fragHolder.GetComponent<Bullet>().pierces = 1; fragHolder.GetComponent<Bullet>().enhanced = true; }
                         if (enhancement[9]) { fragHolder.GetComponent<Bullet>().addEnhancement(9); }
                         if (enhancement[10]) { fragHolder.GetComponent<Bullet>().addEnhancement(10); }
                     }
